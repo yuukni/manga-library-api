@@ -1,0 +1,59 @@
+name: manga-backend
+
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-manga_db}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-YOUR_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER:-spring}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-YOUR_DB_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql/db.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "${MYSQL_USER:-spring}", "-p${MYSQL_PASSWORD:-YOUR_DB_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - spring-mysql-net
+
+  app:
+    build: .
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${MYSQL_DATABASE:-manga_db}?allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER:-spring}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD:-YOUR_DB_PASSWORD}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      MAL_CLIENT_ID: ${MAL_CLIENT_ID:-YOUR_MAL_CLIENT_ID}
+    networks:
+      - spring-mysql-net
+
+  phpmyadmin:
+    image: phpmyadmin:5
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    networks:
+      - spring-mysql-net
+
+volumes:
+  mysql_data:
+
+networks:
+  spring-mysql-net:
+    driver: bridge

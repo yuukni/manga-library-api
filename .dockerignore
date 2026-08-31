@@ -1,0 +1,12 @@
+.git
+.idea
+*.iml
+
+src
+README.md
+
+target/*.war.original
+target/classes
+target/test-classes
+
+.DS_Store

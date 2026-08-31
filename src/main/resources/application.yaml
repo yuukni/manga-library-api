@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: manga-library-api
+  datasource:
+    # Uses environment variables with localhost/spring fallbacks for quick local runs
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/manga_db?allowPublicKeyRetrieval=true&useSSL=false}
+    username: ${SPRING_DATASOURCE_USERNAME:spring}
+    password: ${SPRING_DATASOURCE_PASSWORD:YOUR_DATABASE_PASSWORD}
+  hikari:
+    connection-timeout: 3000
+    initialization-fail-timeout: 0
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  error:
+    whitelabel:
+      enabled: false
+
+# External MyAnimeList Client API credentials
+mal:
+  client:
+    id: ${MAL_CLIENT_ID:YOUR_MAL_CLIENT_ID}
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true

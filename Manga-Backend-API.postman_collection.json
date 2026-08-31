@@ -1,0 +1,405 @@
+{
+  "info": {
+    "_postman_id": "a147990d-4840-4f4e-bad4-94c5a5c211ea",
+    "name": "Manga-Backend-API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Registration",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"newuser\",\n  \"email\": \"user@example.com\",\n  \"password\": \"YOUR_PASSWORD\",\n  \"role\": \"ROLE_USER\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/registration",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "registration"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Admin Dashboard",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "password", "value": "{{admin_password}}", "type": "string" },
+                { "key": "username", "value": "{{admin_username}}", "type": "string" }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/dashboard",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "dashboard"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Users",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "password", "value": "{{admin_password}}", "type": "string" },
+                { "key": "username", "value": "{{admin_username}}", "type": "string" }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User By ID",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "password", "value": "{{admin_password}}", "type": "string" },
+                { "key": "username", "value": "{{admin_username}}", "type": "string" }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users", ":id"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User Tracking",
+      "item": [
+        {
+          "name": "Track Manga",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "password", "value": "{{user_password}}", "type": "string" },
+                { "key": "username", "value": "{{user_username}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mangaTitle\": \"Naruto\",\n  \"status\": \"READING\",\n  \"currentChapter\": 10,\n  \"currentVolume\": 1\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users/1/manga",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "1", "manga"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Library",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "password", "value": "{{admin_password}}", "type": "string" },
+                { "key": "username", "value": "{{admin_username}}", "type": "string" }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/1/manga",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "1", "manga"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove Manga from Library",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/1/manga/:mangaId",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "1", "manga", ":mangaId"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Manga",
+      "item": [
+        {
+          "name": "List All Mangas",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "password", "value": "{{admin_password}}", "type": "string" },
+                { "key": "username", "value": "{{admin_username}}", "type": "string" }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/manga",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "manga"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Import Manga",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "password", "value": "{{admin_password}}", "type": "string" },
+                { "key": "username", "value": "{{admin_username}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/manga/import?query=Naruto&limit=5",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "manga", "import"],
+              "query": [
+                { "key": "query", "value": "Naruto" },
+                { "key": "limit", "value": "5" }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Manga By ID",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "password", "value": "{{admin_password}}", "type": "string" },
+                { "key": "username", "value": "{{admin_username}}", "type": "string" }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/manga/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "manga", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Manga From DB",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "password", "value": "{{admin_password}}", "type": "string" },
+                { "key": "username", "value": "{{admin_username}}", "type": "string" }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/manga/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "manga", ":id"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Author",
+      "item": [
+        {
+          "name": "List All Authors",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "password", "value": "{{admin_password}}", "type": "string" },
+                { "key": "username", "value": "{{admin_username}}", "type": "string" }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/author",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "author"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add Author",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Eiichiro\",\n  \"surname\": \"Oda\",\n  \"bio\": \"Creator of One Piece\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/author",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "author"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Author",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Eiichiro\",\n  \"surname\": \"Oda\",\n  \"bio\": \"Updated bio...\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/author/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "author", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Author",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/author/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "author", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Genre",
+      "item": [
+        {
+          "name": "List All Genres",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/genre",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "genre"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add Genre",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Action\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/genre",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "genre"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Genre",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Action/Adventure\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/genre/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "genre", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Genre",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/genre/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "genre", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      { "key": "password", "value": "{{admin_password}}", "type": "string" },
+      { "key": "username", "value": "{{admin_username}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080", "type": "string" },
+    { "key": "admin_username", "value": "admin", "type": "string" },
+    { "key": "admin_password", "value": "YOUR_ADMIN_PASSWORD", "type": "string" },
+    { "key": "user_username", "value": "user123", "type": "string" },
+    { "key": "user_password", "value": "YOUR_USER_PASSWORD", "type": "string" }
+  ]
+}
