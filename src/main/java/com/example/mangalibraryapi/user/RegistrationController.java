@@ -1,6 +1,7 @@
 package  com.example.mangalibraryapi.user;
 
 import com.example.mangalibraryapi.user.dto.RegistrationForm;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,7 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public ResponseEntity<?> registerUser(@RequestBody RegistrationForm registrationForm) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegistrationForm registrationForm) {
         try {
             User registeredUser = userService.registerUser(registrationForm);
 

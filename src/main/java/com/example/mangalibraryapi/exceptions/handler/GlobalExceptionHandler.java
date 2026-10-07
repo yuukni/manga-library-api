@@ -10,10 +10,25 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import java.time.Instant;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @ControllerAdvice
 @RestController
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ExceptionResponse> handleAccessDenied(AccessDeniedException exception, WebRequest request) {
+        return new ResponseEntity<>(new ExceptionResponse(Instant.now(), "Access denied", request.getDescription(false)),
+                HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ExceptionResponse> handleValidation(MethodArgumentNotValidException exception, WebRequest request) {
+        // Do not include rejected values: registration payloads contain passwords.
+        return new ResponseEntity<>(new ExceptionResponse(Instant.now(), "Invalid registration data", request.getDescription(false)),
+                HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ExceptionResponse> handlerAllExceptions(Exception exception, WebRequest request) {
