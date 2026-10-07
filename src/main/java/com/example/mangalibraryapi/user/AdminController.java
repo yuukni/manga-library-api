@@ -11,7 +11,6 @@ public class AdminController {
 
     private final UserService userService;
 
-    // Iniezione di UserService tramite costruttore
     public AdminController(UserService userService) {
         this.userService = userService;
     }
@@ -29,6 +28,17 @@ public class AdminController {
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return ResponseEntity.noContent().build(); // Returns HTTP 204 No Content
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Changes a user's role. Requires ROLE_ADMIN (see SecurityConfig).
+     * Example: PUT /api/admin/users/5/role?role=ADMIN
+     */
+    @PutMapping("/users/{id}/role")
+    public ResponseEntity<User> updateUserRole(
+            @PathVariable Long id,
+            @RequestParam String role) {
+        return ResponseEntity.ok(userService.updateRole(id, role));
     }
 }

@@ -19,6 +19,7 @@ public class Manga {
     private String title;
     @Column(columnDefinition = "TEXT")
     private String description;
+    @Column(name = "publication_year")
     private Integer year;
     private Integer chapters;
     private Integer volumes;
